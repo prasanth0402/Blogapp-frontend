@@ -23,7 +23,3 @@ const Posts = ({ image, title, details }) => {
 };
 
 export default Posts;
-
-/* "https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/legacy-header-images/header-blog-bing-chatGPT-feature.jpg" */
-/* ChatGPT's new &#10075;Browse with Bing&#10076;: Watching AIs stalk you is odd */
-/*  New Bing-powered ChatGPT cares about providing reliable sources, taking its time, and finding out what you had for... */

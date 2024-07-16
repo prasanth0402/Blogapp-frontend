@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { BsLinkedin } from "react-icons/bs";
-import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
+import {
+  FaFacebookSquare,
+  FaGithubSquare,
+  FaInstagramSquare,
+} from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import EditProfile from "../components/EditProfile";
 
 const Profile = ({ sociallink }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [link, setLink] = useState(sociallink);
+  /*const [link, setLink] = useState(sociallink); */
+  const link = "instagram";
 
   return (
     <>
@@ -51,21 +56,47 @@ const Profile = ({ sociallink }) => {
               <h3 class="font-semibold text-center mt-3 -mb-2">Find me on</h3>
 
               <div class="flex justify-center items-center gap-6 my-6">
-                <Link
-                  class="text-gray-700 hover:text-pink-800"
-                  href="/"
-                  target="_blank"
-                >
-                  {link === "instagram" ? (
+                {link === "instagram" ? (
+                  <Link
+                    class="text-gray-400 hover:text-purple-600"
+                    to="https://www.instagram.com/_prasanth.07"
+                    target="_blank"
+                  >
                     <FaInstagramSquare size={28} />
-                  ) : link === "facebook" ? (
+                  </Link>
+                ) : link === "facebook" ? (
+                  <Link
+                    class="text-gray-400 hover:text-blue-600"
+                    to="https://www.instagram.com/_prasanth.07"
+                    target="_blank"
+                  >
                     <FaFacebookSquare size={28} />
-                  ) : link === "linkedin" ? (
+                  </Link>
+                ) : link === "linkedin" ? (
+                  <Link
+                    class="text-gray-400 hover:text-blue-600"
+                    to="https://www.instagram.com/_prasanth.07"
+                    target="_blank"
+                  >
                     <BsLinkedin size={28} />
-                  ) : (
+                  </Link>
+                ) : link === "github" ? (
+                  <Link
+                    class="text-gray-400 hover:text-black"
+                    to="https://www.instagram.com/_prasanth.07"
+                    target="_blank"
+                  >
                     <FaSquareXTwitter size={28} />
-                  )}
-                </Link>
+                  </Link>
+                ) : (
+                  <Link
+                    class="text-gray-400 hover:text-black"
+                    to="https://github.com/prasanth0402"
+                    target="_blank"
+                  >
+                    <FaGithubSquare size={28} />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -77,28 +108,3 @@ const Profile = ({ sociallink }) => {
 };
 
 export default Profile;
-
-/* <Link
-                  class="text-gray-700 hover:text-black"
-                  aria-label="Visit TrendyMinds Instagram"
-                  href=""
-                  target="_blank"
-                >
-                  <FaSquareXTwitter size={28} />
-                </Link> 
-                <Link
-                    class="text-gray-700 hover:text-blue-400"
-                    aria-label="Visit TrendyMinds LinkedIn"
-                    to=""
-                    target="_blank"
-                  >
-                    <BsLinkedin size={25} />
-                  </Link>
-                  <Link
-                    class="text-gray-700 hover:text-blue-400"
-                    aria-label="Visit TrendyMinds YouTube"
-                    to=""
-                    target="_blank"
-                  >
-                    <FaFacebookSquare size={27} />
-                  </Link>*/
