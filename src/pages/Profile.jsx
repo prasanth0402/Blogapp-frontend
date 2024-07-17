@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import {
   FaFacebookSquare,
@@ -9,10 +9,43 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import EditProfile from "../components/EditProfile";
 
-const Profile = ({ sociallink }) => {
+const Profile = () => {
   const [showEditProfile, setShowEditProfile] = useState(false);
-  /*const [link, setLink] = useState(sociallink); */
-  const link = "instagram";
+  const [profileData, setProfileData] = useState(() => {
+    const savedData = localStorage.getItem("profileData");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          name: "",
+          aboutUs: "",
+          socialLinks: {},
+        };
+  });
+
+  useEffect(() => {
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+  }, [profileData]);
+
+  const handleUpdateProfile = (newData) => {
+    setProfileData(newData);
+  };
+
+  const renderSocialIcon = (platform) => {
+    switch (platform) {
+      case "instagram":
+        return <FaInstagramSquare size={28} />;
+      case "facebook":
+        return <FaFacebookSquare size={28} />;
+      case "linkedin":
+        return <BsLinkedin size={28} />;
+      case "github":
+        return <FaGithubSquare size={28} />;
+      case "twitter":
+        return <FaSquareXTwitter size={28} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -23,7 +56,7 @@ const Profile = ({ sociallink }) => {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1aMNv1yD6kdacpVdHjWO5U56ZhYZiiWjWTw&s"
               className="lg:w-32 lg:h-32 bg-gray-300 rounded-full mb-4 shrink-0 w-20 h-20"
             ></img>
-            <h1 className="text-xl font-bold">Vijay</h1>
+            <h1 className="text-xl font-bold">{profileData.name}</h1>
             <p className="text-gray-700">Actor</p>
             <div className="mt-6 flex flex-wrap gap-4 justify-center">
               <button
@@ -43,66 +76,35 @@ const Profile = ({ sociallink }) => {
           <div class="col-span-4 sm:col-span-9 ">
             <div class="mt-4 flex flex-col items-center">
               <h2 class="text-xl font-bold mb-4">About Me</h2>
-              <p class="text-gray-700">
-                Joseph Vijay Chandrasekhar (born 22 June 1974), known
-                professionally as Vijay, is an Indian actor and playback singer
-                who works in Tamil cinema. In a career spanning in just over 3
-                decades, Vijay has acted in over 65 films and is one of the most
-                commercially successful actors in Tamil cinema with multiple
-                films amongst the highest-grossing Tamil films of all time and
-                is amongst the highest paid actors in India.
-              </p>
+              <p class="text-gray-700">{profileData.aboutUs}</p>
 
               <h3 class="font-semibold text-center mt-3 -mb-2">Find me on</h3>
 
               <div class="flex justify-center items-center gap-6 my-6">
-                {link === "instagram" ? (
-                  <Link
-                    class="text-gray-400 hover:text-purple-600"
-                    to="https://www.instagram.com/_prasanth.07"
-                    target="_blank"
-                  >
-                    <FaInstagramSquare size={28} />
-                  </Link>
-                ) : link === "facebook" ? (
-                  <Link
-                    class="text-gray-400 hover:text-blue-600"
-                    to="https://www.instagram.com/_prasanth.07"
-                    target="_blank"
-                  >
-                    <FaFacebookSquare size={28} />
-                  </Link>
-                ) : link === "linkedin" ? (
-                  <Link
-                    class="text-gray-400 hover:text-blue-600"
-                    to="https://www.instagram.com/_prasanth.07"
-                    target="_blank"
-                  >
-                    <BsLinkedin size={28} />
-                  </Link>
-                ) : link === "github" ? (
-                  <Link
-                    class="text-gray-400 hover:text-black"
-                    to="https://www.instagram.com/_prasanth.07"
-                    target="_blank"
-                  >
-                    <FaSquareXTwitter size={28} />
-                  </Link>
-                ) : (
-                  <Link
-                    class="text-gray-400 hover:text-black"
-                    to="https://github.com/prasanth0402"
-                    target="_blank"
-                  >
-                    <FaGithubSquare size={28} />
-                  </Link>
+                {Object.entries(profileData.socialLinks).map(
+                  ([platform, links]) =>
+                    links.map((link, index) => (
+                      <Link
+                        key={`${platform}-${index}`}
+                        className="text-gray-400 hover:text-purple-600"
+                        to={link}
+                        target="_blank"
+                      >
+                        {renderSocialIcon(platform)}
+                      </Link>
+                    ))
                 )}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <EditProfile show={showEditProfile} setShow={setShowEditProfile} />
+      <EditProfile
+        show={showEditProfile}
+        setShow={setShowEditProfile}
+        profileData={profileData}
+        onUpdate={handleUpdateProfile}
+      />
     </>
   );
 };
