@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import {
@@ -7,13 +8,19 @@ import {
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import EditProfile from "../components/EditProfile";
+import {EditProfile} from '../components/EditProfile'
 
-const Profile = ({ sociallink }) => {
+
+
+export const Profile = () => {
   const [showEditProfile, setShowEditProfile] = useState(false);
-  /*const [link, setLink] = useState(sociallink); */
-  const link = "instagram";
-
+  const [links,setLinks]=useState([])
+  const handleSubmit=(link,icon,e)=>{
+    e.preventDefault()
+    setLinks([...links,{link:link,icon:icon}])
+    console.log(links);
+  }
+  
   return (
     <>
       <div className="flex flex-col items-center">
@@ -40,10 +47,10 @@ const Profile = ({ sociallink }) => {
           <hr className="my-6 border-t border-gray-300" />
         </div>
         <div className=" w-[75%]">
-          <div class="col-span-4 sm:col-span-9 ">
-            <div class="mt-4 flex flex-col items-center">
-              <h2 class="text-xl font-bold mb-4">About Me</h2>
-              <p class="text-gray-700">
+          <div className="col-span-4 sm:col-span-9 ">
+            <div className="mt-4 flex flex-col items-center">
+              <h2 className="text-xl font-bold mb-4">About Me</h2>
+              <p className="text-gray-700">
                 Joseph Vijay Chandrasekhar (born 22 June 1974), known
                 professionally as Vijay, is an Indian actor and playback singer
                 who works in Tamil cinema. In a career spanning in just over 3
@@ -53,58 +60,66 @@ const Profile = ({ sociallink }) => {
                 is amongst the highest paid actors in India.
               </p>
 
-              <h3 class="font-semibold text-center mt-3 -mb-2">Find me on</h3>
+              <h3 className="font-semibold text-center mt-3 -mb-2">Find me on</h3>
 
-              <div class="flex justify-center items-center gap-6 my-6">
-                {link === "instagram" ? (
-                  <Link
-                    class="text-gray-400 hover:text-purple-600"
-                    to="https://www.instagram.com/_prasanth.07"
+              <div className="flex justify-center items-center gap-6 my-6">
+
+                { links.map((link,key)=>{
+                  return <>
+                  {link.icon === "instagram" ? (
+                  <a
+                    className="text-gray-400 hover:text-purple-600"
+                    href={link.link}
                     target="_blank"
                   >
                     <FaInstagramSquare size={28} />
-                  </Link>
-                ) : link === "facebook" ? (
+                  </a>
+                ) : link.icon === "facebook" ? (
                   <Link
-                    class="text-gray-400 hover:text-blue-600"
-                    to="https://www.instagram.com/_prasanth.07"
+                    className="text-gray-400 hover:text-blue-600"
+                    to={link.link}
                     target="_blank"
                   >
                     <FaFacebookSquare size={28} />
                   </Link>
-                ) : link === "linkedin" ? (
+                ) : link.icon === "linkedin" ? (
                   <Link
-                    class="text-gray-400 hover:text-blue-600"
-                    to="https://www.instagram.com/_prasanth.07"
+                    className="text-gray-400 hover:text-blue-600"
+                    to={link.link}                    
                     target="_blank"
                   >
                     <BsLinkedin size={28} />
                   </Link>
-                ) : link === "github" ? (
+                ) : link.icon === "github" ? (
                   <Link
-                    class="text-gray-400 hover:text-black"
-                    to="https://www.instagram.com/_prasanth.07"
+                    className="text-gray-400 hover:text-black"
+                    to={link.link}
                     target="_blank"
                   >
                     <FaSquareXTwitter size={28} />
                   </Link>
                 ) : (
                   <Link
-                    class="text-gray-400 hover:text-black"
-                    to="https://github.com/prasanth0402"
+                    className="text-gray-400 hover:text-black"
+                    to={"https"+toString(link.link)}
                     target="_blank"
                   >
                     <FaGithubSquare size={28} />
                   </Link>
+
                 )}
+                  </>
+                }
+              )}
+                
               </div>
             </div>
           </div>
         </div>
       </div>
-      <EditProfile show={showEditProfile} setShow={setShowEditProfile} />
+      <EditProfile show={showEditProfile} setShow={setShowEditProfile} func={handleSubmit} />
     </>
   );
 };
 
-export default Profile;
+
