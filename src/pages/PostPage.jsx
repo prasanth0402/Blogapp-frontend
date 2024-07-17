@@ -5,8 +5,8 @@ import post from "../util/post";
 
 const PostPage = () => {
   return (
-    <div className="max-w-[80%] mx-auto">
-      <div className="flex mt-7 items-center">
+    <div className="max-w-[80%] mx-auto ">
+      <div className="flex mt-7 items-center ">
         <h1 className=" text-2xl font-bold">Explore technology</h1>
         <hr class="w-[70%] h-1 mx-auto border-0 rounded bg-gray-700" />
       </div>

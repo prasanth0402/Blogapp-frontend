@@ -2,9 +2,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const CreatePost = () => {
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 dark:text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Create Posts
         </h2>
       </div>
@@ -12,7 +12,7 @@ const CreatePost = () => {
       <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
         <form action="#" method="POST" className="space-y-6">
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
+            <label className="block text-sm font-medium leading-6 text-gray-900  dark:text-white">
               Title
             </label>
             <div className="mt-2">
@@ -26,7 +26,7 @@ const CreatePost = () => {
 
           <div>
             <div className="flex items-center justify-between">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6 text-gray-900  dark:text-white">
                 Summary
               </label>
             </div>
@@ -39,7 +39,7 @@ const CreatePost = () => {
             <div className="mt-2">
               <input type="file" />
             </div>
-            <div className="mt-2">
+            <div className="mt-2  dark:text-white">
               <ReactQuill theme="snow" />
             </div>
           </div>

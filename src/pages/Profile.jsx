@@ -49,7 +49,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center bg-white dark:bg-gray-900 text-black dark:text-white">
         <div className="col-span-4 sm:col-span-3">
           <div className="flex flex-col items-center mt-4">
             <img
@@ -57,7 +57,6 @@ const Profile = () => {
               className="lg:w-32 lg:h-32 bg-gray-300 rounded-full mb-4 shrink-0 w-20 h-20"
             ></img>
             <h1 className="text-xl font-bold">{profileData.name}</h1>
-            <p className="text-gray-700">Actor</p>
             <div className="mt-6 flex flex-wrap gap-4 justify-center">
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
@@ -76,17 +75,19 @@ const Profile = () => {
           <div class="col-span-4 sm:col-span-9 ">
             <div class="mt-4 flex flex-col items-center">
               <h2 class="text-xl font-bold mb-4">About Me</h2>
-              <p class="text-gray-700">{profileData.aboutUs}</p>
+              <p class="bg-white dark:bg-gray-900 text-black dark:text-white">
+                {profileData.aboutUs}
+              </p>
 
               <h3 class="font-semibold text-center mt-3 -mb-2">Find me on</h3>
 
-              <div class="flex justify-center items-center gap-6 my-6">
+              <div class="flex justify-center items-center gap-2 my-6">
                 {Object.entries(profileData.socialLinks).map(
                   ([platform, links]) =>
                     links.map((link, index) => (
                       <Link
                         key={`${platform}-${index}`}
-                        className="text-gray-400 hover:text-purple-600"
+                        className="text-gray-400 dark:hover:text-white hover:text-black"
                         to={link}
                         target="_blank"
                       >
