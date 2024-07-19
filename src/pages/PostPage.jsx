@@ -14,6 +14,7 @@ const PostPage = () => {
         {post.map((post) => (
           <Posts
             key={post.id}
+            id={post.id}
             image={post.image}
             title={post.title}
             details={post.details}

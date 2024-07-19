@@ -6,15 +6,23 @@ import Post from "./components/Post";
 import SignupPage from "./components/SignupPage";
 import LoginPage from "./components/LoginPage";
 import CreatePost from "./pages/CreatePost";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />}>
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
           <Route path="/" element={<PostPage />} />
-          <Route path={"/blog"} element={<Post />} />
+          <Route path={"/blog/:id"} element={<Post />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/createpost" element={<CreatePost />} />

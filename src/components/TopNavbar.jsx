@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Search from "../pages/Search";
 import { useEffect, useState } from "react";
 import { CgDarkMode } from "react-icons/cg";
+import { getCurrentUser, logout } from "../util/authuser";
 
 const TopNavbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -20,7 +21,26 @@ const TopNavbar = () => {
     setDarkMode((prevMode) => !prevMode);
     document.documentElement.classList.toggle("dark");
   };
-  const authuser = false;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const updateUser = () => {
+      const currentUser = getCurrentUser();
+      setUser(currentUser);
+    };
+
+    updateUser();
+    // Set up an interval to check for user changes
+    const interval = setInterval(updateUser, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <>
       <nav className="bg-gray-800 sticky top-0 z-50 shadow">
@@ -44,14 +64,14 @@ const TopNavbar = () => {
                 <CgDarkMode size={25} />
               </button>
 
-              {authuser && (
+              {user ? (
                 <div className="relative ml-3">
                   <div>
                     <Link to={"/profile"}>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1aMNv1yD6kdacpVdHjWO5U56ZhYZiiWjWTw&s"
-                        alt=""
+                        src={user.profilePic}
+                        alt="profilepic"
                       />
                     </Link>
                   </div>
@@ -70,17 +90,16 @@ const TopNavbar = () => {
                       >
                         Create Post
                       </Link>
-                      <Link
-                        to="/logout"
+                      <button
+                        onClick={handleLogout}
                         className="block px-4 py-2 text-sm dark:text-white text-gray-700"
                       >
                         Sign out
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
-              )}
-              {!authuser && (
+              ) : (
                 <div className="relative ml-3">
                   <Link to="/login" className=" text-white font-bold ">
                     Login
