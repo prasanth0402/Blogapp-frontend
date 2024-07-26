@@ -1,159 +1,80 @@
-import { useEffect, useState } from "react";
-import { IoClose } from "react-icons/io5";
+import React from "react";
+import { MdOutlineModeEditOutline } from "react-icons/md";
 
-const EditProfile = ({ show, setShow, profileData, onUpdate }) => {
-  const [name, setName] = useState(profileData.name);
-  const [aboutUs, setAboutUs] = useState(profileData.aboutUs);
-  const [links, setLinks] = useState(profileData.socialLinks);
-  const [selectedPlatform, setSelectedPlatform] = useState("");
-  const [username, setUsername] = useState("");
-
-  const platforms = {
-    instagram: "https://www.instagram.com/",
-    facebook: "https://www.facebook.com/",
-    linkedin: "https://www.linkedin.com/in/",
-    github: "https://github.com/",
-    twitter: "https://x.com/",
-  };
-
-  useEffect(() => {
-    setName(profileData.name);
-    setAboutUs(profileData.aboutUs);
-    setLinks(profileData.socialLinks);
-  }, [profileData]);
-
-  const handleAddLink = () => {
-    if (selectedPlatform && username) {
-      setLinks((prev) => ({
-        ...prev,
-        [selectedPlatform]: [
-          ...(prev[selectedPlatform] || []),
-          platforms[selectedPlatform] + username,
-        ],
-      }));
-      setSelectedPlatform("");
-      setUsername("");
+const EditProfile = ({ show, setShow }) => {
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setShow(false);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdate({ name, aboutUs, socialLinks: links });
-    setShow(false);
   };
   return (
     <>
-      {show ? (
-        <div className="fixed top-0 left-0 w-full h-screen backdrop-blur-sm flex items-center justify-center ">
-          <div className="w-1/3 h-[400px] bg-white ring-1 ring-slate-200 p-4 rounded-md overflow-hidden">
-            <header className="flex justify-between items-center">
-              <h1 className=" font-bold text-xl">Edit Profile</h1>
-              <button onClick={() => setShow(false)}>
-                <IoClose size={20} />
-              </button>
-            </header>
-            <main>
-              <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
-                <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-sm">
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Name
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Name"
-                          type="text"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                        />
+      {show && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={handleOverlayClick}
+        >
+          <div className="bg-white w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-lg shadow-lg dark:bg-[#212121]">
+            <div className="flex flex-col md:flex-row p-3 sm:p-4 md:p-6 gap-4">
+              <main className="flex-1">
+                <h2 className="text-2xl font-bold mb-4">Public Profile</h2>
+                <div className="space-y-4">
+                  <div className="flex justify-center mb-4">
+                    <div className="relative w-24 h-24">
+                      <img
+                        className="w-full h-full rounded-full object-cover"
+                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+                        alt="Profile avatar"
+                      />
+                      <div className="absolute top-0 right-0 p-1 bg-white rounded-full cursor-pointer">
+                        <MdOutlineModeEditOutline className="text-gray-500" />
                       </div>
                     </div>
-
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <label
-                          htmlFor="password"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          About Me
-                        </label>
-                      </div>
-                      <div className="mt-1">
-                        <textarea
-                          value={aboutUs}
-                          onChange={(e) => setAboutUs(e.target.value)}
-                          placeholder="About Us"
-                          className="block w-full rounded-md border-0 max-h-[100px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <label className="block text-sm font-medium leading-6 text-gray-900">
-                          Links
-                        </label>
-                      </div>
-                      <div className="mt-1 flex gap-2">
-                        <input
-                          type="text"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                          placeholder="Enter your username"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        />
-                        <select
-                          value={selectedPlatform}
-                          onChange={(e) => setSelectedPlatform(e.target.value)}
-                          className="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        >
-                          <option value="">Select Platform</option>
-                          {Object.keys(platforms).map((platform) => (
-                            <option key={platform} value={platform}>
-                              {platform}
-                            </option>
-                          ))}
-                        </select>
-                        <button type="button" onClick={handleAddLink}>
-                          Add
-                        </button>
-                      </div>
-                    </div>
-                    {Object.entries(links).map(([platform, usernames]) => (
-                      <div key={platform}>
-                        <span>{platform}: </span>
-                        {usernames.map((link, index) => (
-                          <input
-                            key={index}
-                            type="text"
-                            value={link}
-                            onChange={(e) => {
-                              const newUsernames = [...usernames];
-                              newUsernames[index] = e.target.value;
-                              setLinks((prev) => ({
-                                ...prev,
-                                [platform]: newUsernames,
-                              }));
-                            }}
-                          />
-                        ))}
-                      </div>
-                    ))}
-
-                    <button
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 "
-                      type="submit"
-                    >
-                      Update
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input
+                      className="w-full p-2 border rounded dark:border-none dark:bg-[#181818]"
+                      placeholder="First Name"
+                    />
+                    <input
+                      className="w-full p-2 border rounded dark:border-none dark:bg-[#181818] "
+                      placeholder="Last Name"
+                    />
+                  </div>
+                  <input
+                    className="w-full p-2 border rounded dark:border-none dark:bg-[#181818]"
+                    type="email"
+                    placeholder="Email"
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <input
+                      className="w-full col-span-2 p-2 dark:border-none border rounded dark:bg-[#181818]"
+                      placeholder="Social Link"
+                    />
+                    <select className="w-full p-2 border dark:border-none rounded dark:bg-[#181818]">
+                      <option value="">Select Platform</option>
+                      <option value="twitter">Twitter</option>
+                      <option value="facebook">Facebook</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="linkedin">LinkedIn</option>
+                    </select>
+                  </div>
+                  <textarea
+                    className="w-full p-2 border dark:border-none rounded dark:bg-[#181818]"
+                    rows="3"
+                    placeholder="Bio"
+                  ></textarea>
+                  <div className="flex justify-end">
+                    <button className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                      Save
                     </button>
-                  </form>
+                  </div>
                 </div>
-              </div>
-            </main>
+              </main>
+            </div>
           </div>
         </div>
-      ) : null}
+      )}
     </>
   );
 };

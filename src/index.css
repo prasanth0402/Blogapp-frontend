@@ -4,11 +4,29 @@
 
 @layer base {
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    @apply bg-white text-gray-900 dark:bg-[#181818] dark:text-white;
   }
 }
-@layer base {
-  body {
-    @apply transition-colors duration-200 ease-in-out;
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 6px;
   }
+}
+
+.ql-container {
+  font-size: 28px !important;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: #b3b3b1;
+}
+
+.quill-row-placeholder .ql-editor.ql-blank::before {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
